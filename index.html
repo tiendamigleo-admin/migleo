@@ -1,0 +1,3872 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Migleo</title>
+    <meta name="description" content="Descubre nuestra colección exclusiva de ropa premium. Vestidos elegantes, ternos sofisticados, conjuntos modernos y abrigos de alta calidad.">
+    <meta name="keywords" content="ropa elegante, moda premium, vestidos, ternos, smoky, conjuntos, abrigos, accesorios, tienda migleo">
+    <meta name="author" content="Moda Elegante">
+    <link rel="icon" href="FOTOS/ICONO/Icono.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1179A0;
+            --secondary-color: #59B2AC;
+            --accent-color: #BF7499;
+            --accent-secondary: #F26D71;
+            --dark-color: #1a1a1a;
+            --light-color: #f8f9fa;
+            --text-color: #333;
+            --white: #fff;
+            --transition: all 0.3s ease;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.15);
+            --focus-shadow: 0 0 0 3px rgba(17, 121, 160, 0.5);
+            --filter-indicator: #FFD700;
+            --filter-bg: #f0f8ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            touch-action: manipulation;
+        }
+        
+        /* Mejoras de accesibilidad para enfoque */
+        a:focus, button:focus, input:focus, select:focus, textarea:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 70vh;
+            background: linear-gradient(rgba(17, 121, 160, 0.7), rgba(89, 178, 172, 0.7)), 
+                        url('https://images.unsplash.com/photo-1551232864-3f0890e580d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--accent-color);
+            color: var(--white);
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover,
+        .btn:focus {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+            background: var(--accent-secondary);
+            outline: none;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 1.5rem;
+            display: flex;
+            gap: 2rem;
+            position: relative;
+        }
+
+        .main-content {
+            flex: 1;
+        }
+
+        section {
+            scroll-margin-top: 180px; /* evita que el header tape el título */
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+
+        /* Sección de resultados de búsqueda */
+        .search-results-section {
+            display: none;
+            margin-bottom: 3rem;
+        }
+
+        .search-results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .active-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1rem 0;
+        }
+
+        /* Nuevos badges de filtros activos */
+        .filter-badge {
+            display: flex;
+            align-items: center;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 0.8rem;
+            border-radius: 16px;
+            font-size: 0.9rem;
+            position: relative;
+        }
+
+        .filter-badge .badge-text {
+            margin-right: 0.3rem;
+        }
+
+        .filter-badge button {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .filter-badge button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .filter-badge .tooltip {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            pointer-events: none;
+        }
+
+        .filter-badge:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+            bottom: -35px;
+        }
+
+        /* Sugerencias de búsqueda */
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 0 0 8px 8px;
+            box-shadow: var(--shadow-hover);
+            z-index: 100;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .search-suggestion-item {
+            padding: 0.8rem 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .search-suggestion-item:hover,
+        .search-suggestion-item:focus {
+            background-color: var(--light-color);
+        }
+
+        .search-suggestion-item i {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+
+        /* Filtros Avanzados - Diseño Híbrido */
+        .filters-container {
+            width: 300px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 100px; /* Offset para no superponerse con el header */
+            align-self: flex-start;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+            padding-right: 5px;
+            transition: var(--transition);
+        }
+
+        .filters-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .filters-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .filters-container::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 10px;
+        }
+
+        .filter-toggle {
+            display: none;
+        }
+
+        .advanced-filters {
+            background-color: var(--white);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            transition: var(--transition);
+        }
+
+        .filters-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .filters-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        .clear-filters-btn {
+            background: var(--accent-secondary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .clear-filters-btn:hover {
+            background: #e04a5a;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .filter-group {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1rem;
+            position: relative;
+        }
+
+        .filter-group:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .filter-group-header {
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+
+        .filter-group-header i {
+            transition: var(--transition);
+        }
+
+        .filter-group-header.active i {
+            transform: rotate(180deg);
+        }
+
+        .filter-badge-count {
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 10px;
+            padding: 2px 8px;
+            font-size: 0.7rem;
+            margin-left: 8px;
+        }
+
+        .filter-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.8rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .filter-group.expanded .filter-options {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .filter-checkbox {
+            display: none;
+        }
+
+        .filter-label {
+            padding: 0.5rem 0.8rem;
+            background: var(--light-color);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .filter-checkbox:checked + .filter-label {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .filter-label:hover {
+            background: var(--secondary-color);
+            color: var(--white);
+        }
+
+        .color-filter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+        }
+
+        /* Indicador de filtro dependiente */
+        .filter-dependency-indicator {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 8px;
+            height: 8px;
+            background-color: var(--filter-indicator);
+            border-radius: 50%;
+        }
+
+        .filter-dependency-label {
+            font-size: 0.7rem;
+            color: #666;
+            margin-top: 0.3rem;
+            font-style: italic;
+            grid-column: 1 / -1;
+        }
+
+        /* Campos de búsqueda en filtros */
+        .filter-search {
+            position: relative;
+            margin-bottom: 0.8rem;
+            width: 100%;
+            grid-column: 1 / -1;
+        }
+
+        .filter-search input {
+            width: 100%;
+            padding: 0.5rem 1rem 0.5rem 2.2rem;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .filter-search i {
+            position: absolute;
+            left: 0.8rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+
+        /* Contador de opciones */
+        .filter-options-count {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 0.5rem;
+            grid-column: 1 / -1;
+        }
+
+        /* Mensaje de sin opciones */
+        .no-options-message {
+            font-size: 0.9rem;
+            color: #999;
+            font-style: italic;
+            padding: 0.5rem 0;
+            text-align: center;
+            width: 100%;
+            grid-column: 1 / -1;
+        }
+
+        /* Sección de Productos Destacados */
+        .featured-products {
+            background-color: var(--white);
+            padding: 3rem 0;
+            margin: 3rem 0;
+            box-shadow: var(--shadow);
+            border-radius: 10px;
+        }
+
+        .featured-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 0 1.5rem;
+        }
+
+        .featured-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        /* Barra de búsqueda */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 3rem;
+            border: 2px solid var(--primary-color);
+            border-radius: 30px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            box-shadow: var(--focus-shadow);
+        }
+
+        .search-input{
+            scroll-margin-top: 100px; /* evita que el header tape el título */
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+        }
+
+        .voice-search-btn {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--secondary-color);
+            color: var(--white);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .favorite-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 2;
+            transition: var(--transition);
+            border: none;
+        }
+
+        .favorite-badge:focus {
+            outline: none;
+            box-shadow: var(--focus-shadow);
+        }
+
+        .favorite-badge:hover {
+            transform: scale(1.1);
+        }
+
+        .favorite-badge.active {
+            color: var(--accent-secondary);
+        }
+
+        .product-image {
+            position: relative;
+            height: 320px;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .product-image img.lazy {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .product-image img.loaded {
+            opacity: 1;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            color: var(--dark-color);
+            font-weight: 700;
+            min-height: 60px;
+        }
+
+        .product-description {
+            color: #666;
+            margin-bottom: 1.2rem;
+            font-size: 0.9rem;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .product-details {
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-item {
+            display: flex;
+            margin-bottom: 0.8rem;
+            align-items: center;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            min-width: 80px;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+
+        .color-options {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid var(--white);
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .color-option.selected {
+            transform: scale(1.1);
+            border: 2px solid var(--primary-color);
+        }
+
+        .color-option:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+            position: relative;
+        }
+
+        .color-option:disabled::after {
+            content: "🚫";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 12px;
+        }
+
+        .color-option:hover:not(:disabled),
+        .color-option:focus:not(:disabled) {
+            transform: scale(1.1);
+            outline: none;
+        }
+
+        .color-name {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            white-space: nowrap;
+            opacity: 0;
+            transition: var(--transition);
+            pointer-events: none;
+        }
+
+        .color-option:hover .color-name,
+        .color-option:focus .color-name {
+            opacity: 1;
+            bottom: -30px;
+        }
+
+        .size-options {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        .size-option {
+            padding: 0.3rem 0.6rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+            min-width: 32px;
+            text-align: center;
+        }
+
+        .size-option.selected {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .size-option:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+            text-decoration: line-through;
+            position: relative;
+        }
+
+        .size-option:disabled:hover::after {
+            content: "No disponible";
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            white-space: nowrap;
+        }
+
+        .size-option:hover:not(:disabled),
+        .size-option:focus:not(:disabled) {
+            background: var(--primary-color);
+            outline: none;
+            color: rgb(255, 255, 255);
+        }
+
+        .product-keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .keyword-tag {
+            background: var(--light-color);
+            padding: 0.3rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            color: var(--primary-color);
+        }
+
+        .product-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .btn-detail {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            height: 55px;
+        }
+
+        .btn-detail:hover,
+        .btn-detail:focus {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+            outline: none;
+        }
+
+        .btn-contact {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--accent-color);
+            color: var(--white);
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            height: 55px;
+        }
+
+        .btn-contact:hover,
+        .btn-contact:focus {
+            background: #128C7E;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+            outline: none;
+        }
+
+        /* Botones Flotantes - Solo filtros */
+        .float-buttons {
+            position: fixed;
+            right: 30px;
+            bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 100;
+        }
+
+        .float-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-hover);
+            transition: var(--transition);
+            position: relative;
+            border: none;
+            color: var(--white);
+        }
+
+        .float-button-label {
+            font-size: 0.6rem;
+            margin-top: 2px;
+            font-weight: 600;
+        }
+
+        .filters-float {
+            background: var(--accent-color);
+            display: none;
+        }
+
+        .float-button:hover,
+        .float-button:focus {
+            transform: translateY(-5px) scale(1.1);
+            outline: none;
+        }
+
+        .filters-float:hover,
+        .filters-float:focus {
+            background: var(--accent-secondary);
+        }
+
+        /* Modal de Filtros para móviles */
+        .filters-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            padding: 1rem;
+        }
+
+        .filters-modal.active {
+            display: flex;
+            opacity: 1;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .filters-modal-content {
+            background: var(--white);
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            border-radius: 10px;
+            padding: 2rem;
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .filters-modal.active .filters-modal-content {
+            transform: translateY(0);
+        }
+
+        .close-filters-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+            padding: 0.5rem;
+            border-radius: 50%;
+        }
+
+        .close-filters-modal:focus {
+            outline: none;
+            box-shadow: var(--focus-shadow);
+        }
+
+        /* Modal de Asesores */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: var(--white);
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            border-radius: 10px;
+            padding: 2rem;
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+            padding: 0.5rem;
+            border-radius: 50%;
+        }
+
+        .close-modal:focus {
+            outline: none;
+            box-shadow: var(--focus-shadow);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .modal-header h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+        }
+
+        .modal-body {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .modal-btn {
+            padding: 0.6rem 1.5rem;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            min-width: 120px;
+        }
+
+        .modal-btn:focus {
+            outline: none;
+            box-shadow: var(--focus-shadow);
+        }
+
+        .modal-btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .modal-btn-primary:hover {
+            background: var(--secondary-color);
+        }
+
+        .modal-btn-secondary {
+            background: #f0f0f0;
+            color: var(--text-color);
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .advisors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .advisor-card {
+            background: var(--light-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .advisor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .advisor-photo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1rem;
+            border: 3px solid var(--primary-color);
+        }
+
+        .advisor-name {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+
+        .advisor-position {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .advisor-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .contact-link:hover,
+        .contact-link:focus {
+            background: var(--secondary-color);
+            outline: none;
+        }
+
+        /* Paginación */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .page-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .page-btn:focus {
+            outline: none;
+            box-shadow: var(--focus-shadow);
+        }
+
+        .page-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .page-btn:hover:not(.active) {
+            background: #f0f0f0;
+        }
+
+        .page-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Error State */
+        .error-state {
+            text-align: center;
+            padding: 3rem;
+            background: var(--white);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin: 2rem 0;
+        }
+
+        .error-icon {
+            font-size: 3rem;
+            color: var(--accent-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .error-state h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .error-state p {
+            margin-bottom: 1.5rem;
+            color: #666;
+        }
+
+        /* Skeleton loading */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 4px;
+        }
+
+        .skeleton-card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .skeleton-image {
+            height: 320px;
+            width: 100%;
+        }
+
+        .skeleton-text {
+            height: 1rem;
+            margin-bottom: 0.8rem;
+            width: 100%;
+        }
+
+        .skeleton-text.short {
+            width: 60%;
+        }
+
+        .skeleton-text.medium {
+            width: 80%;
+        }
+
+        .skeleton-price {
+            height: 1.5rem;
+            width: 40%;
+            margin-bottom: 1rem;
+        }
+
+        .skeleton-button {
+            height: 2.5rem;
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes loading {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+           100% {
+                transform: scale(1);
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Loading Spinner */
+        .loader {
+            display: none;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+           100% { transform: rotate(360deg); }
+        }
+
+        /* Mensaje de no resultados */
+        .no-results {
+            text-align: center;
+            padding: 2rem;
+            grid-column: 1 / -1;
+            color: #666;
+        }
+
+        /* Mejoras adicionales */
+        .search-loading {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            display: none;
+        }
+
+        .search-loading.active {
+            display: block;
+        }
+
+        .filter-loading {
+            display: inline-block;
+            margin-left: 10px;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 99;
+            box-shadow: var(--shadow-hover);
+            border: none;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover,
+        .back-to-top:focus {
+            background: var(--primary-color);
+            outline: none;
+        }
+
+        /* Mejoras de accesibilidad para modales */
+        .modal[aria-hidden="false"] {
+            display: flex;
+        }
+
+        .modal[aria-hidden="true"] {
+            display: none;
+        }
+
+        /* Notificación de filtros */
+        .filter-notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 4px;
+            box-shadow: var(--shadow-hover);
+            z-index: 10000;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            max-width: 90%;
+            text-align: center;
+        }
+
+        .filter-notification.visible {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .modal-content {
+                max-width: 700px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+
+            .modal-content {
+                max-width: 600px;
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                height: 60vh;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .btn {
+                padding: 0.6rem 1.5rem;
+            }
+            
+            .float-buttons {
+                right: 15px;
+                bottom: 15px;
+                gap: 10px;
+            }
+            
+            .float-button {
+                width: 50px;
+                height: 50px;
+                font-size: 1.3rem;
+            }
+            
+            .filter-options {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+            
+            .filter-label {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .modal-content {
+                max-width: 500px;
+            }
+
+            .back-to-top {
+                bottom: 80px;
+                right: 15px;
+                width: 45px;
+                height: 45px;
+            }
+
+            /* Filtros responsivos */
+            .container {
+                flex-direction: column;
+            }
+
+            .filters-container {
+                width: 100%;
+                margin-bottom: 2rem;
+                display: none;
+                position: static;
+                max-height: none;
+            }
+
+            .filters-float {
+                display: flex;
+            }
+
+            .advanced-filters {
+                margin-bottom: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                width: 95%;
+                padding: 1rem;
+                max-width: 95%;
+            }
+            
+            .page-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
+            }
+
+            .modal-footer {
+                flex-direction: column;
+            }
+
+            .modal-btn {
+                width: 100%;
+            }
+
+            .filters-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .filters-modal-content {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .hero h2 {
+                font-size: 1.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.5rem;
+            }
+
+            .product-image {
+                height: 280px;
+            }
+
+            .product-title {
+                min-height: auto;
+            }
+            
+            .float-buttons {
+                right: 10px;
+                bottom: 10px;
+            }
+            
+            .float-button {
+                width: 45px;
+                height: 45px;
+                font-size: 1.1rem;
+            }
+            
+            .float-button-label {
+                font-size: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header/Menú se importará desde otro archivo -->
+    <div id="menu-container"></div>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Colección Exclusiva</h2>
+            <p>Descubre los diseños más elegantes de la temporada</p>
+            <a href="#featured-products" class="btn pulse">Ver Colección</a>
+        </div>
+    </section>
+
+    <main id="main-content">
+        <div class="container">
+            <!-- Filtros Avanzados - Diseño Híbrido -->
+            <div class="filters-container" id="desktopFilters">
+                <section class="advanced-filters" aria-labelledby="filtersTitle">
+                    <div class="filters-header">
+                        <h2 class="filters-title" id="filtersTitle"><i class="fas fa-filter"></i> Filtros</h2>
+                        <button class="clear-filters-btn" id="clearFilters">
+                            <i class="fas fa-times"></i> Limpiar
+                        </button>
+                    </div>
+                    
+                    <!-- Filtro de Categoría (Independiente) -->
+                    <div class="filter-group expanded">
+                        <div class="filter-group-header" data-target="categoryFilters" aria-expanded="true">
+                            <span><i class="fas fa-tags"></i> Categorías <span class="filter-badge-count" id="categoryFilterCount">0</span></span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="filter-options" id="categoryFilters" role="group" aria-labelledby="categoryFiltersLabel">
+                            <div class="filter-search">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="categorySearch" placeholder="Buscar categorías..." aria-label="Buscar categorías">
+                            </div>
+                            <div id="categoryFiltersContent"></div>
+                            <div class="filter-options-count" id="categoryOptionsCount"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Filtro de Colores (Dependiente de Categoría) -->
+                    <div class="filter-group">
+                        <div class="filter-dependency-indicator" title="Este filtro depende de la categoría seleccionada"></div>
+                        <div class="filter-group-header" data-target="colorFilters" aria-expanded="false">
+                            <span><i class="fas fa-palette"></i> Colores <span class="filter-badge-count" id="colorFilterCount">0</span></span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="filter-options" id="colorFilters" role="group" aria-labelledby="colorFiltersLabel">
+                            <div class="filter-search">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="colorSearch" placeholder="Buscar colores..." aria-label="Buscar colores" disabled>
+                            </div>
+                            <div id="colorFiltersContent"></div>
+                            <div class="filter-dependency-label">Depende de la categoría seleccionada</div>
+                            <div class="filter-options-count" id="colorOptionsCount"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Filtro de Tallas (Dependiente de Categoría) -->
+                    <div class="filter-group">
+                        <div class="filter-dependency-indicator" title="Este filtro depende de la categoría seleccionada"></div>
+                        <div class="filter-group-header" data-target="sizeFilters" aria-expanded="false">
+                            <span><i class="fas fa-ruler"></i> Tallas <span class="filter-badge-count" id="sizeFilterCount">0</span></span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="filter-options" id="sizeFilters" role="group" aria-labelledby="sizeFiltersLabel">
+                            <div class="filter-search">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="sizeSearch" placeholder="Buscar tallas..." aria-label="Buscar tallas" disabled>
+                            </div>
+                            <div id="sizeFiltersContent"></div>
+                            <div class="filter-dependency-label">Depende de la categoría seleccionada</div>
+                            <div class="filter-options-count" id="sizeOptionsCount"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Filtro de Etiquetas (Dependiente de Categoría) -->
+                    <div class="filter-group">
+                        <div class="filter-dependency-indicator" title="Este filtro depende de la categoría seleccionada"></div>
+                        <div class="filter-group-header" data-target="keywordFilters" aria-expanded="false">
+                            <span><i class="fas fa-key"></i> Etiquetas <span class="filter-badge-count" id="keywordFilterCount">0</span></span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="filter-options" id="keywordFilters" role="group" aria-labelledby="keywordFiltersLabel">
+                            <div class="filter-search">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="keywordSearch" placeholder="Buscar etiquetas..." aria-label="Buscar etiquetas" disabled>
+                            </div>
+                            <div id="keywordFiltersContent"></div>
+                            <div class="filter-dependency-label">Depende de la categoría seleccionada</div>
+                            <div class="filter-options-count" id="keywordOptionsCount"></div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="main-content">
+                <!-- Barra de búsqueda -->
+                <div class="search-container">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon" aria-hidden="true"></i>
+                        <input type="text" class="search-input" id="searchInput" placeholder="Buscar productos..." aria-label="Buscar productos">
+                        <button class="voice-search-btn" id="voiceSearchBtn" aria-label="Búsqueda por voz">
+                            <i class="fas fa-microphone" aria-hidden="true"></i>
+                        </button>
+                        <div class="search-loading" id="searchLoading">
+                            <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
+                        </div>
+                        <div class="search-suggestions" id="searchSuggestions" role="listbox" aria-label="Sugerencias de búsqueda"></div>
+                    </div>
+                </div>
+                
+                <!-- Sección de Resultados de Búsqueda -->
+                <section id="search-results" class="search-results-section" aria-labelledby="searchResultsTitle">
+                    <div class="section-title">
+                        <h2 id="searchResultsTitle">Resultados de tu búsqueda</h2>
+                    </div>
+                    <div class="search-results-header">
+                        <div class="active-filters" id="activeFilters" aria-label="Filtros activos"></div>
+                        <button class="clear-filters-btn" id="clearResultsFilters">
+                            <i class="fas fa-times"></i> Limpiar Filtros
+                        </button>
+                    </div>
+                    <div class="products-grid" id="search-results-grid" role="list" aria-label="Productos encontrados"></div>
+                    <div class="pagination" id="search-results-pagination" aria-label="Paginación de resultados"></div>
+                </section>
+
+                <!-- Sección de Productos Destacados -->
+                <section id="featured-products" class="featured-products" aria-labelledby="featuredProductsTitle">
+                    <div class="featured-header">
+                        <h2 id="featuredProductsTitle"><i class="fas fa-star" aria-hidden="true"></i> Productos Destacados</h2>
+                    </div>
+                    <div class="products-grid" id="featured-products-grid" role="list" aria-label="Productos destacados"></div>
+                    <div class="pagination" id="featured-pagination" aria-label="Paginación de productos destacados"></div>
+                </section>
+
+                <!-- Secciones dinámicas de categorías se crearán aquí -->
+                <div id="category-sections"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Botón para volver arriba -->
+    <button class="back-to-top" id="backToTop" aria-label="Volver arriba">
+        <i class="fas fa-arrow-up" aria-hidden="true"></i>
+    </button>
+
+    <!-- Botones flotantes - Solo filtros -->
+    <div class="float-buttons">
+        <button class="float-button filters-float" id="filtersFloat" aria-label="Abrir filtros">
+            <i class="fas fa-filter" aria-hidden="true"></i>
+            <span class="float-button-label">Filtros</span>
+        </button>
+    </div>
+
+    <!-- Modal de Filtros para móviles -->
+    <div class="filters-modal" id="filtersModal" aria-hidden="true" role="dialog" aria-labelledby="filtersModalTitle">
+        <div class="filters-modal-content">
+            <button class="close-filters-modal" id="closeFiltersModal" aria-label="Cerrar modal de filtros">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+            <div class="filters-header">
+                <h2 class="filters-title" id="filtersModalTitle"><i class="fas fa-filter"></i> Filtros</h2>
+                <button class="clear-filters-btn" id="clearFiltersMobile">
+                    <i class="fas fa-times"></i> Limpiar
+                </button>
+            </div>
+            
+            <!-- Filtros para móviles (misma estructura que desktop) -->
+            <div class="filter-group expanded">
+                <div class="filter-group-header" data-target="categoryFiltersMobile" aria-expanded="true">
+                    <span><i class="fas fa-tags"></i> Categorías <span class="filter-badge-count" id="categoryFilterCountMobile">0</span></span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="filter-options" id="categoryFiltersMobile" role="group" aria-labelledby="categoryFiltersMobileLabel">
+                    <div class="filter-search">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="categorySearchMobile" placeholder="Buscar categorías..." aria-label="Buscar categorías">
+                    </div>
+                    <div id="categoryFiltersContentMobile"></div>
+                    <div class="filter-options-count" id="categoryOptionsCountMobile"></div>
+                </div>
+            </div>
+            
+            <div class="filter-group">
+                <div class="filter-dependency-indicator" title="Este filtro depende de la categoría seleccionada"></div>
+                <div class="filter-group-header" data-target="colorFiltersMobile" aria-expanded="false">
+                    <span><i class="fas fa-palette"></i> Colores <span class="filter-badge-count" id="colorFilterCountMobile">0</span></span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="filter-options" id="colorFiltersMobile" role="group" aria-labelledby="colorFiltersMobileLabel">
+                    <div class="filter-search">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="colorSearchMobile" placeholder="Buscar colores..." aria-label="Buscar colores" disabled>
+                    </div>
+                    <div id="colorFiltersContentMobile"></div>
+                    <div class="filter-dependency-label">Depende de la categoría seleccionada</div>
+                    <div class="filter-options-count" id="colorOptionsCountMobile"></div>
+                </div>
+            </div>
+            
+            <div class="filter-group">
+                <div class="filter-dependency-indicator" title="Este filtro depende de la categoría seleccionada"></div>
+                <div class="filter-group-header" data-target="sizeFiltersMobile" aria-expanded="false">
+                    <span><i class="fas fa-ruler"></i> Tallas <span class="filter-badge-count" id="sizeFilterCountMobile">0</span></span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="filter-options" id="sizeFiltersMobile" role="group" aria-labelledby="sizeFiltersMobileLabel">
+                    <div class="filter-search">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="sizeSearchMobile" placeholder="Buscar tallas..." aria-label="Buscar tallas" disabled>
+                    </div>
+                    <div id="sizeFiltersContentMobile"></div>
+                    <div class="filter-dependency-label">Depende de la categoría seleccionada</div>
+                    <div class="filter-options-count" id="sizeOptionsCountMobile"></div>
+                </div>
+            </div>
+            
+            <div class="filter-group">
+                <div class="filter-dependency-indicator" title="Este filtro depende de la categoría seleccionada"></div>
+                <div class="filter-group-header" data-target="keywordFiltersMobile" aria-expanded="false">
+                    <span><i class="fas fa-key"></i> Etiquetas <span class="filter-badge-count" id="keywordFilterCountMobile">0</span></span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="filter-options" id="keywordFiltersMobile" role="group" aria-labelledby="keywordFiltersMobileLabel">
+                    <div class="filter-search">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="keywordSearchMobile" placeholder="Buscar etiquetas..." aria-label="Buscar etiquetas" disabled>
+                    </div>
+                    <div id="keywordFiltersContentMobile"></div>
+                    <div class="filter-dependency-label">Depende de la categoría seleccionada</div>
+                    <div class="filter-options-count" id="keywordOptionsCountMobile"></div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="modal-btn modal-btn-primary" id="applyFilters">Aplicar Filtros</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Asesores -->
+    <div class="modal" id="advisorsModal" aria-hidden="true" role="dialog" aria-labelledby="advisorsModalTitle">
+        <div class="modal-content">
+            <button class="close-modal" id="closeAdvisorsModal" aria-label="Cerrar modal de asesores">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+            <div class="modal-header">
+                <h2 id="advisorsModalTitle"><i class="fas fa-headset" aria-hidden="true"></i> Nuestros Asesores</h2>
+            </div>
+            <div class="modal-body">
+                <p>Selecciona un asesor para contactarte por WhatsApp</p>
+                <div class="advisors-grid" id="advisorsGrid">
+                    <!-- Los asesores se cargarán dinámicamente -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer se importará desde otro archivo -->
+    <div id="footer-container"></div>
+
+    <script>
+        // Variable global para almacenar los productos
+        let productosData = [];
+        const productsPerPage = 8; // Número de productos por página
+        const infiniteScrollThreshold = 200; // Píxeles desde el fondo para cargar más productos
+        let selectedColors = {}; // Almacena los colores seleccionados por producto
+        let selectedSizes = {}; // Almacena las tallas seleccionados por producto
+        let currentAction = ''; // Para manejar acciones en modales de confirmación
+        let searchTimeout = null; // Para el debounce de búsqueda
+        let imageObserver = null; // Observer para lazy loading
+        let activeFilters = {
+            categories: [],
+            colors: [],
+            sizes: [],
+            keywords: []
+        };
+        let hasActiveFilters = false; // Para controlar si hay filtros activos
+        let searchTerm = ''; // Para almacenar el término de búsqueda
+        let currentPage = {}; // Para almacenar la página actual de cada sección
+        let isLoadingMore = false; // Para evitar múltiples cargas simultáneas
+        let eventListeners = []; // Para gestionar eventos y evitar memory leaks
+        let colorMapData = {}; // Mapa de colores cargado desde JSON externo
+        let advisorsData = []; // Datos de asesores cargados desde JSON externo
+        let categorySections = {}; // Para almacenar las secciones de categorías
+        
+        // Estructura para filtros dependientes
+        let filterDependencies = {
+            colors: [],
+            keywords: [],
+            sizes: []
+        };
+
+        // Función para cargar mapa de colores desde archivo externo
+        async function loadColorMap() {
+            try {
+                const response = await fetch('colores.json');
+                if (!response.ok) {
+                    throw new Error("No se pudo cargar colores.json");
+                }
+                
+                const data = await response.json();
+                if (!data.colores) throw new Error("Formato inválido: falta propiedad 'colores'");
+                
+                colorMapData = data.colores;
+                
+            } catch (error) {
+                console.error("Error al cargar colores:", error);
+                // No cargar mapa de colores por defecto como se solicitó
+            }
+        }
+
+        // Función para cargar asesores desde archivo externo
+        async function loadAdvisors() {
+            try {
+                const response = await fetch('asesores.json');
+                if (!response.ok) {
+                    throw new Error("No se pudo cargar asesores.json");
+                }
+                
+                const data = await response.json();
+                if (!data.asesores) throw new Error("Formato inválido: falta propiedad 'asesores'");
+                
+                advisorsData = data.asesores;
+                
+            } catch (error) {
+                console.error("Error al cargar asesores:", error);
+                // No mostrar error al usuario ya que no es crítico para la funcionalidad principal
+            }
+        }
+
+        // Obtener nombre del color basado en el código
+        function getColorName(colorCode) {
+            // Buscar en el mapa de colores cargado
+            for (const [name, hex] of Object.entries(colorMapData)) {
+                if (hex.toLowerCase() === colorCode.toLowerCase()) {
+                    return name;
+                }
+            }
+            return colorCode; // Devolver el código si no se encuentra el nombre
+        }
+
+        // Obtener código hexadecimal basado en el nombre del color
+        function getColorHex(colorName) {
+            return colorMapData[colorName] || '#cccccc';
+        }
+
+        // Cargar el menú
+        function loadMenu(){
+            fetch('menu.html')
+                .then(response=>response.text())
+                .then(data=>{
+                    document.getElementById('menu-container').innerHTML=data;
+                    initMobileNav();
+                })
+                .catch(error=>{
+                    console.error('Error al cargar el menú: ',error)
+                })
+        }
+
+        // Cargar el footer
+        function loadFooter(){
+            fetch('footer.html')
+                .then(response=>response.text())
+                .then(data=>{
+                    document.getElementById('footer-container').innerHTML=data;
+                })
+                .catch(error=>{
+                    console.error('Error al cargar el footer: ',error)
+                })
+        }
+
+        // Función para inicializar la navegación móvil
+        function initMobileNav() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mainNav = document.getElementById('mainNav');
+            
+            if (mobileMenuBtn && mainNav) {
+                const toggleMenu = () => {
+                    mainNav.classList.toggle('active');
+                    mobileMenuBtn.innerHTML = mainNav.classList.contains('active') ? 
+                        '<i class="fas fa-times" aria-hidden="true"></i>' : '<i class="fas fa-bars" aria-hidden="true"></i>';
+                    mobileMenuBtn.setAttribute('aria-expanded', mainNav.classList.contains('active'));
+                };
+                
+                mobileMenuBtn.addEventListener('click', toggleMenu);
+                
+                // Cerrar menú al hacer clic en an enlace (versión móvil)
+                const navLinks = document.querySelectorAll('#mainNav a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (window.innerWidth <= 768) {
+                            mainNav.classList.remove('active');
+                            mobileMenuBtn.innerHTML = '<i class="fas fa-bars" aria-hidden="true"></i>';
+                            mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                });
+            }
+        }
+
+        // Función para cargar productos desde el JSON externo
+        async function loadProducts() {
+            try {
+                // Mostrar skeleton screens mientras se cargan los productos
+                showSkeletonScreens();
+                
+                // Cargar mapa de colores y asesores primero
+                await Promise.all([loadColorMap(), loadAdvisors()]);
+                
+                // Intentar cargar desde productos.json
+                let response = await fetch('productos.json');
+                
+                // Si falla, mostrar error
+                if (!response.ok) {
+                    throw new Error("No se pudo cargar productos.json");
+                }
+                
+                const data = await response.json();
+                if (!data.productos) throw new Error("Formato inválido: falta propiedad 'productos'");
+                productosData = data.productos;
+                
+                // Procesar colores para convertir nombres a códigos hexadecimales
+                productosData.forEach(product => {
+                    if (product.colores) {
+                        product.colores = product.colores.map(color => {
+                            if (typeof color === 'string') {
+                                // Si el color es un string (nombre), convertirlo a objeto con código hexadecimal
+                                return {
+                                    nombre: color,
+                                    codigo: getColorHex(color)
+                                };
+                            }
+                            return color;
+                        });
+                    }
+                    
+                    // Seleccionar la primera talla y el primer color por defecto
+                    if (product.tallas && product.tallas.length > 0) {
+                        selectedSizes[product.id] = product.tallas[0];
+                    }
+                    
+                    if (product.colores && product.colores.length > 0) {
+                        selectedColors[product.id] = product.colores[0].codigo;
+                    }
+                });
+                
+                renderProducts(productosData);
+                setupLazyLoading();
+                setupAdvancedFilters();
+                setupInfiniteScroll();
+                
+                // Ocultar skeleton screens
+                hideSkeletonScreens();
+                
+            } catch (error) {
+                console.error("Error al cargar productos:", error);
+                // Mostrar estado de error
+                showErrorState();
+                hideSkeletonScreens();
+            }
+        }
+
+        // Mostrar skeleton screens mientras se cargan los productos
+        function showSkeletonScreens() {
+            const sections = [
+                'featured-products-grid',
+                'search-results-grid'
+            ];
+            
+            sections.forEach(section => {
+                const grid = document.getElementById(section);
+                if (grid) {
+                    let skeletonHTML = '';
+                    for (let i = 0; i < 4; i++) {
+                        skeletonHTML += `
+                            <div class="skeleton-card">
+                                <div class="skeleton skeleton-image"></div>
+                                <div class="product-info">
+                                    <div class="skeleton skeleton-text"></div>
+                                    <div class="skeleton skeleton-text short"></div>
+                                    <div class="skeleton skeleton-price"></div>
+                                    <div class="skeleton skeleton-button"></div>
+                                    <div class="skeleton skeleton-button" style="background-color: #25D366;"></div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    grid.innerHTML = skeletonHTML;
+                }
+            });
+        }
+
+        // Ocultar skeleton screens
+        function hideSkeletonScreens() {
+            document.querySelectorAll('.loader').forEach(loader => {
+                loader.style.display = 'none';
+            });
+        }
+
+        // Configurar scroll infinito
+        function setupInfiniteScroll() {
+            const handleInfiniteScroll = () => {
+                if (isLoadingMore) return;
+                
+                const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+                const clientHeight = document.documentElement.clientHeight || window.innerHeight;
+                
+                if (scrollTop + clientHeight >= scrollHeight - infiniteScrollThreshold) {
+                    // Determinar en qué sección estamos
+                    let activeSection = null;
+                    const sections = ['featured-products', 'search-results'];
+                    
+                    for (const section of sections) {
+                        const element = document.getElementById(section);
+                        if (element && isElementInViewport(element)) {
+                            activeSection = section;
+                            break;
+                        }
+                    }
+                    
+                    // También verificar secciones de categorías dinámicas
+                    if (!activeSection) {
+                        for (const category in categorySections) {
+                            const element = document.getElementById(category);
+                            if (element && isElementInViewport(element)) {
+                                activeSection = category;
+                                break;
+                            }
+                        }
+                    }
+                    
+                    if (activeSection && !hasActiveFilters) {
+                        loadMoreProducts(activeSection);
+                    }
+                }
+            };
+            
+            window.addEventListener('scroll', handleInfiniteScroll);
+            eventListeners.push({ element: window, type: 'scroll', handler: handleInfiniteScroll });
+        }
+
+        // Verificar si un elemento está en el viewport
+        function isElementInViewport(el) {
+            const rect = el.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+
+        // Cargar más productos para una sección
+        function loadMoreProducts(sectionId) {
+            if (isLoadingMore) return;
+            
+            isLoadingMore = true;
+            
+            // Mostrar indicador de carga
+            const loader = document.createElement('div');
+            loader.className = 'loader';
+            loader.style.margin = '2rem auto';
+            
+            const grid = document.getElementById(`${sectionId}-grid`);
+            if (grid) {
+                grid.after(loader);
+                loader.style.display = 'block';
+                
+                // Simular carga (en un caso real, esto cargaría más datos)
+                setTimeout(() => {
+                    const currentProducts = grid.querySelectorAll('.product-card').length;
+                    const allProducts = getProductsForSection(sectionId);
+                    
+                    if (currentProducts < allProducts.length) {
+                        const nextProducts = allProducts.slice(currentProducts, currentProducts + productsPerPage);
+                        nextProducts.forEach(product => {
+                            grid.innerHTML += createProductCard(product);
+                        });
+                        
+                        setupLazyLoading();
+                        setupColorAndSizeSelection();
+                        setupFavoriteButtons();
+                        setupAdvisorButtons();
+                    }
+                    
+                    // Ocultar loader
+                    loader.style.display = 'none';
+                    loader.remove();
+                    
+                    isLoadingMore = false;
+                }, 1000);
+            } else {
+                isLoadingMore = false;
+            }
+        }
+
+        // Obtener productos para una sección específica
+        function getProductsForSection(sectionId) {
+            if (sectionId === 'featured-products') {
+                return productosData.filter(product => product.destacado);
+            } else if (sectionId === 'search-results') {
+                return productosData.filter(product => shouldShowProduct(product));
+            } else if (categorySections[sectionId]) {
+                // Es una sección de categoría dinámica
+                return productosData.filter(product => product.categoria === sectionId);
+            }
+            return [];
+        }
+
+        // Configurar filtros avanzados
+        function setupAdvancedFilters() {
+            // Recopilar todos los datos para los filtros
+            const categories = new Set();
+            
+            productosData.forEach(product => {
+                // Categorías
+                categories.add(product.categoria);
+            });
+            
+            // Renderizar filtros de categorías (independiente)
+            renderFilterOptions('categoryFiltersContent', [...categories], 'category');
+            renderFilterOptions('categoryFiltersContentMobile', [...categories], 'category');
+            
+            // Inicializar filtros dependientes (vacíos hasta que se seleccione una categoría)
+            updateDependentFilters();
+            
+            // Configurar eventos para los filtros
+            document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
+                const handleFilterChange = function() {
+                    updateFilterCounts();
+                    
+                    // Si es un filtro de categoría, actualizar filtros dependientes
+                    if (this.getAttribute('data-type') === 'category') {
+                        updateDependentFilters();
+                    }
+                    
+                    applyFilters();
+                };
+                
+                checkbox.addEventListener('change', handleFilterChange);
+                eventListeners.push({ element: checkbox, type: 'change', handler: handleFilterChange });
+            });
+            
+            // Configurar búsquedas en filtros
+            setupFilterSearches();
+            
+            // Configurar botón de limpiar filtros
+            const clearFiltersBtn = document.getElementById('clearFilters');
+            const clearFiltersMobileBtn = document.getElementById('clearFiltersMobile');
+            const clearResultsFiltersBtn = document.getElementById('clearResultsFilters');
+            
+            const clearFiltersHandler = () => clearFilters();
+            
+            clearFiltersBtn.addEventListener('click', clearFiltersHandler);
+            clearFiltersMobileBtn.addEventListener('click', clearFiltersHandler);
+            clearResultsFiltersBtn.addEventListener('click', clearFiltersHandler);
+            
+            eventListeners.push(
+                { element: clearFiltersBtn, type: 'click', handler: clearFiltersHandler },
+                { element: clearFiltersMobileBtn, type: 'click', handler: clearFiltersHandler },
+                { element: clearResultsFiltersBtn, type: 'click', handler: clearFiltersHandler }
+            );
+            
+            // Configurar acordeón para grupos de filtros
+            setupFilterAccordion();
+            
+            // Inicializar contadores de filtros
+            updateFilterCounts();
+        }
+        
+        // Configurar búsquedas en filtros
+        function setupFilterSearches() {
+            // Búsqueda en categorías
+            const categorySearch = document.getElementById('categorySearch');
+            const categorySearchMobile = document.getElementById('categorySearchMobile');
+            
+            if (categorySearch) {
+                categorySearch.addEventListener('input', () => filterOptions('category', categorySearch.value));
+                eventListeners.push({ element: categorySearch, type: 'input', handler: () => filterOptions('category', categorySearch.value) });
+            }
+            
+            if (categorySearchMobile) {
+                categorySearchMobile.addEventListener('input', () => filterOptions('category', categorySearchMobile.value, true));
+                eventListeners.push({ element: categorySearchMobile, type: 'input', handler: () => filterOptions('category', categorySearchMobile.value, true) });
+            }
+            
+            // Búsqueda en colores
+            const colorSearch = document.getElementById('colorSearch');
+            const colorSearchMobile = document.getElementById('colorSearchMobile');
+            
+            if (colorSearch) {
+                colorSearch.addEventListener('input', () => filterOptions('color', colorSearch.value));
+                eventListeners.push({ element: colorSearch, type: 'input', handler: () => filterOptions('color', colorSearch.value) });
+            }
+            
+            if (colorSearchMobile) {
+                colorSearchMobile.addEventListener('input', () => filterOptions('color', colorSearchMobile.value, true));
+                eventListeners.push({ element: colorSearchMobile, type: 'input', handler: () => filterOptions('color', colorSearchMobile.value, true) });
+            }
+            
+            // Búsqueda en tallas
+            const sizeSearch = document.getElementById('sizeSearch');
+            const sizeSearchMobile = document.getElementById('sizeSearchMobile');
+            
+            if (sizeSearch) {
+                sizeSearch.addEventListener('input', () => filterOptions('size', sizeSearch.value));
+                eventListeners.push({ element: sizeSearch, type: 'input', handler: () => filterOptions('size', sizeSearch.value) });
+            }
+            
+            if (sizeSearchMobile) {
+                sizeSearchMobile.addEventListener('input', () => filterOptions('size', sizeSearchMobile.value, true));
+                eventListeners.push({ element: sizeSearchMobile, type: 'input', handler: () => filterOptions('size', sizeSearchMobile.value, true) });
+            }
+            
+            // Búsqueda en etiquetas
+            const keywordSearch = document.getElementById('keywordSearch');
+            const keywordSearchMobile = document.getElementById('keywordSearchMobile');
+            
+            if (keywordSearch) {
+                keywordSearch.addEventListener('input', () => filterOptions('keyword', keywordSearch.value));
+                eventListeners.push({ element: keywordSearch, type: 'input', handler: () => filterOptions('keyword', keywordSearch.value) });
+            }
+            
+            if (keywordSearchMobile) {
+                keywordSearchMobile.addEventListener('input', () => filterOptions('keyword', keywordSearchMobile.value, true));
+                eventListeners.push({ element: keywordSearchMobile, type: 'input', handler: () => filterOptions('keyword', keywordSearchMobile.value, true) });
+            }
+        }
+        
+        // Filtrar opciones dentro de un filtro
+        function filterOptions(filterType, searchTerm, isMobile = false) {
+            const suffix = isMobile ? 'Mobile' : '';
+            const container = document.getElementById(`${filterType}FiltersContent${suffix}`);
+            
+            if (!container) return;
+            
+            const options = container.querySelectorAll('.filter-label');
+            let visibleCount = 0;
+            
+            options.forEach(option => {
+                const text = option.textContent.toLowerCase();
+                if (text.includes(searchTerm.toLowerCase())) {
+                    option.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    option.style.display = 'none';
+                }
+            });
+            
+            // Actualizar contador
+            const countElement = document.getElementById(`${filterType}OptionsCount${suffix}`);
+            if (countElement) {
+                countElement.textContent = `${visibleCount} opciones`;
+            }
+        }
+        
+        // Actualizar filtros dependientes basados en categorías seleccionadas
+        function updateDependentFilters() {
+            const selectedCategories = Array.from(document.querySelectorAll('.filter-checkbox[data-type="category"]:checked')).map(cb => cb.value);
+            
+            // Si no hay categorías seleccionadas, deshabilitar filtros dependientes
+            const colorSearch = document.getElementById('colorSearch');
+            const colorSearchMobile = document.getElementById('colorSearchMobile');
+            const sizeSearch = document.getElementById('sizeSearch');
+            const sizeSearchMobile = document.getElementById('sizeSearchMobile');
+            const keywordSearch = document.getElementById('keywordSearch');
+            const keywordSearchMobile = document.getElementById('keywordSearchMobile');
+            
+            if (selectedCategories.length === 0) {
+                if (colorSearch) colorSearch.disabled = true;
+                if (colorSearchMobile) colorSearchMobile.disabled = true;
+                if (sizeSearch) sizeSearch.disabled = true;
+                if (sizeSearchMobile) sizeSearchMobile.disabled = true;
+                if (keywordSearch) keywordSearch.disabled = true;
+                if (keywordSearchMobile) keywordSearchMobile.disabled = true;
+                
+                // Limpiar filtros dependientes
+                document.querySelectorAll('.filter-checkbox[data-type="color"]').forEach(cb => cb.checked = false);
+                document.querySelectorAll('.filter-checkbox[data-type="size"]').forEach(cb => cb.checked = false);
+                document.querySelectorAll('.filter-checkbox[data-type="keyword"]').forEach(cb => cb.checked = false);
+                
+                // Mostrar mensaje de que no hay opciones
+                document.getElementById('colorFiltersContent').innerHTML = '<div class="no-options-message">Selecciona una categoría primero</div>';
+                document.getElementById('colorFiltersContentMobile').innerHTML = '<div class="no-options-message">Selecciona una categoría primero</div>';
+                document.getElementById('sizeFiltersContent').innerHTML = '<div class="no-options-message">Selecciona una categoría primero</div>';
+                document.getElementById('sizeFiltersContentMobile').innerHTML = '<div class="no-options-message">Selecciona una categoría primero</div>';
+                document.getElementById('keywordFiltersContent').innerHTML = '<div class="no-options-message">Selecciona una categoría primero</div>';
+                document.getElementById('keywordFiltersContentMobile').innerHTML = '<div class="no-options-message">Selecciona una categoría primero</div>';
+                
+                // Actualizar contadores
+                document.getElementById('colorOptionsCount').textContent = '0 opciones';
+                document.getElementById('colorOptionsCountMobile').textContent = '0 opciones';
+                document.getElementById('sizeOptionsCount').textContent = '0 opciones';
+                document.getElementById('sizeOptionsCountMobile').textContent = '0 opciones';
+                document.getElementById('keywordOptionsCount').textContent = '0 opciones';
+                document.getElementById('keywordOptionsCountMobile').textContent = '0 opciones';
+                
+                return;
+            }
+            
+            // Habilitar búsquedas en filtros dependientes
+            if (colorSearch) colorSearch.disabled = false;
+            if (colorSearchMobile) colorSearchMobile.disabled = false;
+            if (sizeSearch) sizeSearch.disabled = false;
+            if (sizeSearchMobile) sizeSearchMobile.disabled = false;
+            if (keywordSearch) keywordSearch.disabled = false;
+            if (keywordSearchMobile) keywordSearchMobile.disabled = false;
+            
+            // Recopilar colores, tallas y etiquetas disponibles para las categorías seleccionadas
+            const availableColors = new Set();
+            const availableSizes = new Set();
+            const availableKeywords = new Set();
+            
+            productosData.forEach(product => {
+                // Verificar si el producto pertenece a alguna categoría seleccionada
+                const productCategories = [product.categoria];
+                if (product.subcategoria) productCategories.push(product.subcategoria);
+                
+                const hasSelectedCategory = productCategories.some(cat => selectedCategories.includes(cat));
+                
+                if (hasSelectedCategory) {
+                    // Colores
+                    if (product.colores) {
+                        product.colores.forEach(color => {
+                            availableColors.add(color.nombre);
+                        });
+                    }
+                    
+                    // Tallas
+                    if (product.tallas) {
+                        product.tallas.forEach(talla => {
+                            availableSizes.add(talla);
+                        });
+                    }
+                    
+                    // Etiquetas
+                    if (product.palabrasClave) {
+                        product.palabrasClave.forEach(keyword => {
+                            availableKeywords.add(keyword);
+                        });
+                    }
+                }
+            });
+            
+            // Renderizar filtros de colores (dependiente)
+            renderFilterOptions('colorFiltersContent', [...availableColors], 'color');
+            renderFilterOptions('colorFiltersContentMobile', [...availableColors], 'color');
+            
+            // Renderizar filtros de tallas (dependiente)
+            renderFilterOptions('sizeFiltersContent', [...availableSizes], 'size');
+            renderFilterOptions('sizeFiltersContentMobile', [...availableSizes], 'size');
+            
+            // Renderizar filtros de etiquetas (dependiente)
+            renderFilterOptions('keywordFiltersContent', [...availableKeywords], 'keyword');
+            renderFilterOptions('keywordFiltersContentMobile', [...availableKeywords], 'keyword');
+            
+            // Actualizar contadores
+            document.getElementById('colorOptionsCount').textContent = `${availableColors.size} opciones`;
+            document.getElementById('colorOptionsCountMobile').textContent = `${availableColors.size} opciones`;
+            document.getElementById('sizeOptionsCount').textContent = `${availableSizes.size} opciones`;
+            document.getElementById('sizeOptionsCountMobile').textContent = `${availableSizes.size} opciones`;
+            document.getElementById('keywordOptionsCount').textContent = `${availableKeywords.size} opciones`;
+            document.getElementById('keywordOptionsCountMobile').textContent = `${availableKeywords.size} opciones`;
+            
+            // Reconectar event listeners para los nuevos checkboxes
+            document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
+                const handleFilterChange = function() {
+                    updateFilterCounts();
+                    applyFilters();
+                };
+                
+                // Eliminar event listeners existentes para evitar duplicados
+                checkbox.removeEventListener('change', handleFilterChange);
+                checkbox.addEventListener('change', handleFilterChange);
+            });
+            
+            // Actualizar contadores de filtros
+            updateFilterCounts();
+        }
+        
+        // Renderizar opciones de filtro
+        function renderFilterOptions(containerId, values, type) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            if (values.length === 0) {
+                container.innerHTML = '<div class="no-options-message">No hay opciones disponibles</div>';
+                return;
+            }
+            
+            let sortedValues = [...values];
+            if (type === 'size') {
+                // Ordenar tallas de manera lógica (XS, S, M, L, XL, etc.)
+                const sizeOrder = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
+                sortedValues.sort((a, b) => {
+                    const aIndex = sizeOrder.indexOf(a);
+                    const bIndex = sizeOrder.indexOf(b);
+                    
+                    if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
+                    if (aIndex !== -1) return -1;
+                    if (bIndex !== -1) return 1;
+                    return a.localeCompare(b);
+                });
+            } else {
+                sortedValues.sort();
+            }
+            
+            sortedValues.forEach(value => {
+                let labelText = value;
+                
+                if (type === 'color') {
+                    const colorHex = getColorHex(value) || '#cccccc';
+                    container.innerHTML += `
+                        <input type="checkbox" id="${type}-${value}-${containerId}" class="filter-checkbox" value="${value}" data-type="${type}">
+                        <label for="${type}-${value}-${containerId}" class="filter-label">
+                            <span class="color-filter" style="background-color: ${colorHex};"></span>
+                            ${value}
+                        </label>
+                    `;
+                } else if (type === 'category') {
+                    labelText = formatCategoryName(value);
+                    container.innerHTML += `
+                        <input type="checkbox" id="${type}-${value}-${containerId}" class="filter-checkbox" value="${value}" data-type="${type}">
+                        <label for="${type}-${value}-${containerId}" class="filter-label">${labelText}</label>
+                    `;
+                } else {
+                    container.innerHTML += `
+                        <input type="checkbox" id="${type}-${value}-${containerId}" class="filter-checkbox" value="${value}" data-type="${type}">
+                        <label for="${type}-${value}-${containerId}" class="filter-label">${labelText}</label>
+                    `;
+                }
+            });
+        }
+        
+        // Configurar acordeón para filtros
+        function setupFilterAccordion() {
+            const filterGroupHeaders = document.querySelectorAll('.filter-group-header');
+            
+            filterGroupHeaders.forEach(header => {
+                const toggleAccordion = function() {
+                    const targetId = this.getAttribute('data-target');
+                    const targetElement = document.getElementById(targetId);
+                    const parentGroup = this.closest('.filter-group');
+                    
+                    // Cerrar todos los grupos primero
+                    document.querySelectorAll('.filter-group').forEach(group => {
+                        if (group !== parentGroup) {
+                            group.classList.remove('expanded');
+                            group.querySelector('.filter-group-header').classList.remove('active');
+                            group.querySelector('.filter-group-header').setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                    
+                    // Alternar el grupo actual
+                    parentGroup.classList.toggle('expanded');
+                    this.classList.toggle('active');
+                    this.setAttribute('aria-expanded', parentGroup.classList.contains('expanded'));
+                };
+                
+                header.addEventListener('click', toggleAccordion);
+                eventListeners.push({ element: header, type: 'click', handler: toggleAccordion });
+                
+                // Soporte para teclado
+                header.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggleAccordion.call(header);
+                    }
+                });
+            });
+            
+            // Expandir el primer grupo por defecto
+            const firstGroup = document.querySelector('.filter-group');
+            if (firstGroup) {
+                firstGroup.classList.add('expanded');
+                firstGroup.querySelector('.filter-group-header').classList.add('active');
+                firstGroup.querySelector('.filter-group-header').setAttribute('aria-expanded', 'true');
+            }
+        }
+        
+        // Actualizar contadores de filtros seleccionados
+        function updateFilterCounts() {
+            const filterTypes = ['category', 'color', 'size', 'keyword'];
+            
+            filterTypes.forEach(type => {
+                const count = document.querySelectorAll(`.filter-checkbox[data-type="${type}"]:checked`).length;
+                
+                // Actualizar en escritorio
+                const countElement = document.getElementById(`${type}FilterCount`);
+                if (countElement) {
+                    countElement.textContent = count;
+                    countElement.style.display = count > 0 ? 'inline-block' : 'none';
+                }
+                
+                // Actualizar en móvil
+                const countElementMobile = document.getElementById(`${type}FilterCountMobile`);
+                if (countElementMobile) {
+                    countElementMobile.textContent = count;
+                    countElementMobile.style.display = count > 0 ? 'inline-block' : 'none';
+                }
+            });
+        }
+        
+        // Formatear nombre de categoría
+        function formatCategoryName(category) {
+            return category.charAt(0).toUpperCase() + category.slice(1);
+        }
+        
+        // Aplicar filtros
+        function applyFilters() {
+            // Recopilar filtros activos
+            activeFilters = {
+                categories: Array.from(document.querySelectorAll('.filter-checkbox[data-type="category"]:checked')).map(cb => cb.value),
+                colors: Array.from(document.querySelectorAll('.filter-checkbox[data-type="color"]:checked')).map(cb => cb.value),
+                sizes: Array.from(document.querySelectorAll('.filter-checkbox[data-type="size"]:checked')).map(cb => cb.value),
+                keywords: Array.from(document.querySelectorAll('.filter-checkbox[data-type="keyword"]:checked')).map(cb => cb.value)
+            };
+            
+            // Verificar si hay filtros activos
+            hasActiveFilters = activeFilters.categories.length > 0 || 
+                              activeFilters.colors.length > 0 || 
+                              activeFilters.sizes.length > 0 || 
+                              activeFilters.keywords.length > 0 ||
+                              searchTerm.length > 0;
+            
+            // Mostrar u ocultar sección de resultados según corresponda
+            toggleSearchResultsSection();
+            
+            // Si hay filtros activos, mostrar productos filtrados
+            if (hasActiveFilters) {
+                renderFilteredProducts();
+                updateActiveFiltersDisplay();
+            } else {
+                // Si no hay filtros, mostrar todas las secciones normales
+                showAllSections();
+            }
+        }
+        
+        // Alternar visibilidad de la sección de resultados
+        function toggleSearchResultsSection() {
+            const searchResultsSection = document.getElementById('search-results');
+            
+            if (hasActiveFilters) {
+                searchResultsSection.style.display = 'block';
+                hideAllSections();
+            } else {
+                searchResultsSection.style.display = 'none';
+                showAllSections();
+            }
+        }
+        
+        // Ocultar todas las secciones normales
+        function hideAllSections() {
+            const sectionsToHide = [
+                'featured-products'
+            ];
+            
+            sectionsToHide.forEach(sectionId => {
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    section.style.display = 'none';
+                }
+            });
+            
+            // Ocultar también secciones de categorías dinámicas
+            for (const category in categorySections) {
+                const section = document.getElementById(category);
+                if (section) {
+                    section.style.display = 'none';
+                }
+            }
+        }
+        
+        // Mostrar todas las secciones normales
+        function showAllSections() {
+            const sectionsToShow = [
+                'featured-products'
+            ];
+            
+            sectionsToShow.forEach(sectionId => {
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    section.style.display = 'block';
+                }
+            });
+            
+            // Mostrar también secciones de categorías dinámicas
+            for (const category in categorySections) {
+                const section = document.getElementById(category);
+                if (section) {
+                    section.style.display = 'block';
+                }
+            }
+        }
+        
+        // Renderizar productos filtrados
+        function renderFilteredProducts() {
+            const filteredProducts = productosData.filter(product => shouldShowProduct(product));
+            renderProductsWithPagination(filteredProducts, 'search-results-grid', 'search-results-pagination');
+            
+            // Desplazar a la sección de resultados si hay filtros activos
+            if (hasActiveFilters) {
+                document.getElementById('search-results').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+        
+        // Actualizar visualización de filtros activos
+        function updateActiveFiltersDisplay() {
+            const activeFiltersContainer = document.getElementById('activeFilters');
+            activeFiltersContainer.innerHTML = '';
+            
+            // Agregar badges para cada filtro activo
+            Object.entries(activeFilters).forEach(([type, values]) => {
+                if (values.length > 0) {
+                    values.forEach(value => {
+                        let displayValue = value;
+                        let filterTypeName = '';
+                        
+                        if (type === 'color') {
+                            filterTypeName = 'Color';
+                        } else if (type === 'size') {
+                            filterTypeName = 'Talla';
+                        } else if (type === 'category') {
+                            displayValue = formatCategoryName(value);
+                            filterTypeName = 'Categoría';
+                        } else if (type === 'keyword') {
+                            filterTypeName = 'Etiqueta';
+                        }
+                        
+                        const badge = document.createElement('div');
+                        badge.className = 'filter-badge';
+                        badge.innerHTML = `
+                            <span class="badge-text">${displayValue}</span>
+                            <button type="button" data-type="${type}" data-value="${value}" aria-label="Eliminar filtro ${filterTypeName}: ${displayValue}">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <span class="tooltip">Haz clic para eliminar este filtro</span>
+                        `;
+                        
+                        activeFiltersContainer.appendChild(badge);
+                    });
+                }
+            });
+            
+            // Agregar badge para búsqueda si existe
+            if (searchTerm.length > 0) {
+                const badge = document.createElement('div');
+                badge.className = 'filter-badge';
+                badge.innerHTML = `
+                    <span class="badge-text">Búsqueda: "${searchTerm}"</span>
+                    <button type="button" data-type="search" data-value="${searchTerm}" aria-label="Eliminar búsqueda">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <span class="tooltip">Haz clic para eliminar esta búsqueda</span>
+                `;
+                activeFiltersContainer.appendChild(badge);
+            }
+            
+            // Agregar event listeners a los botones de eliminar filtro
+            activeFiltersContainer.querySelectorAll('button').forEach(button => {
+                const removeFilter = function() {
+                    const type = this.getAttribute('data-type');
+                    const value = this.getAttribute('data-value');
+                    
+                    if (type === 'search') {
+                        // Limpiar búsqueda
+                        document.getElementById('searchInput').value = '';
+                        searchTerm = '';
+                    } else {
+                        // Desmarcar el checkbox correspondiente
+                        const checkboxes = document.querySelectorAll(`.filter-checkbox[data-type="${type}"][value="${value}"]`);
+                        checkboxes.forEach(checkbox => {
+                            checkbox.checked = false;
+                        });
+                    }
+                    
+                    // Aplicar filtros actualizados
+                    applyFilters();
+                };
+                
+                button.addEventListener('click', removeFilter);
+                eventListeners.push({ element: button, type: 'click', handler: removeFilter });
+            });
+        }
+
+        // Determinar si un producto debe mostrarse según los filtros activos
+        function shouldShowProduct(product) {
+            // Si no hay filtros activos, mostrar todos los productos
+            if (!hasActiveFilters) {
+                return true;
+            }
+            
+            // Verificar búsqueda por texto
+            if (searchTerm.length > 0) {
+                const searchableText = `${product.titulo} ${product.descripcion} ${product.palabrasClave ? product.palabrasClave.join(' ') : ''}`.toLowerCase();
+                if (!searchableText.includes(searchTerm.toLowerCase())) {
+                    return false;
+                }
+            }
+            
+            // Verificar filtros de categorías
+            if (activeFilters.categories.length > 0) {
+                const productCategories = [product.categoria];
+                if (product.subcategoria) productCategories.push(product.subcategoria);
+                
+                const hasMatchingCategory = productCategories.some(cat => activeFilters.categories.includes(cat));
+                if (!hasMatchingCategory) return false;
+            }
+            
+            // Verificar filtros de colores
+            if (activeFilters.colors.length > 0 && product.colores) {
+                const productColors = product.colores.map(c => c.nombre);
+                const hasMatchingColor = productColors.some(color => activeFilters.colors.includes(color));
+                if (!hasMatchingColor) return false;
+            }
+            
+            // Verificar filtros de tallas
+            if (activeFilters.sizes.length > 0 && product.tallas) {
+                const hasMatchingSize = product.tallas.some(talla => activeFilters.sizes.includes(talla));
+                if (!hasMatchingSize) return false;
+            }
+            
+            // Verificar filtros de etiquetas
+            if (activeFilters.keywords.length > 0 && product.palabrasClave) {
+                const hasMatchingKeyword = product.palabrasClave.some(keyword => activeFilters.keywords.includes(keyword));
+                if (!hasMatchingKeyword) return false;
+            }
+            
+            return true;
+        }
+        
+        // Limpiar todos los filtros
+        function clearFilters() {
+            document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            
+            // Limpiar búsqueda
+            document.getElementById('searchInput').value = '';
+            searchTerm = '';
+            
+            // Limpiar búsquedas en filtros
+            document.querySelectorAll('.filter-search input').forEach(input => {
+                input.value = '';
+            });
+            
+            activeFilters = {
+                categories: [],
+                colors: [],
+                sizes: [],
+                keywords: []
+            };
+            
+            hasActiveFilters = false;
+            
+            updateFilterCounts();
+            updateDependentFilters();
+            toggleSearchResultsSection();
+            showAllSections();
+            
+            // Mostrar notificación
+            showFilterNotification();
+        }
+
+        // Mostrar notificación de filtros reiniciados
+        function showFilterNotification() {
+            const notification = document.getElementById('filterNotification');
+            if (!notification) return;
+            
+            notification.classList.add('visible');
+            
+            setTimeout(() => {
+                notification.classList.remove('visible');
+            }, 3000);
+        }
+
+        // Mostrar estado de error cuando falla la carga
+        function showErrorState() {
+            const sections = [
+                'featured-products-grid',
+                'search-results-grid'
+            ];
+            
+            sections.forEach(section => {
+                const grid = document.getElementById(section);
+                if (grid) {
+                    grid.innerHTML = `
+                        <div class="error-state" style="grid-column: 1 / -1;">
+                            <div class="error-icon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <h3>¡Ups! Algo salió mal</h3>
+                            <p>No pudimos cargar los productos en este momento. Por favor, intenta nuevamente más tarde.</p>
+                            <button class="btn" onclick="location.reload()">
+                                <i class="fas fa-redo"></i> Reintentar
+                            </button>
+                        </div>
+                    `;
+                }
+            });
+            
+            // Ocultar paginación
+            document.querySelectorAll('.pagination').forEach(pagination => {
+                pagination.innerHTML = '';
+            });
+            
+            // Ocultar filtros
+            document.querySelector('.advanced-filters').style.display = 'none';
+        }
+
+        // Lazy loading para imágenes
+        function setupLazyLoading() {
+            // Desconectar observer existente si hay uno
+            if (imageObserver) {
+                imageObserver.disconnect();
+            }
+            
+            // Si IntersectionObserver está disponible, usarlo
+            if ('IntersectionObserver' in window) {
+                imageObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            if (img.dataset.src) {
+                                img.src = img.dataset.src;
+                                img.classList.add('loaded');
+                                delete img.dataset.src;
+                            }
+                            observer.unobserve(img);
+                        }
+                    });
+                }, {
+                    rootMargin: '0px 0px 100px 0px',
+                    threshold: 0.1
+                });
+
+                document.querySelectorAll('.product-image img:not(.loaded)').forEach(img => {
+                    if (!img.classList.contains('loaded')) {
+                        img.dataset.src = img.src;
+                        img.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiBwcmVzZXJ2ZUFzcGVjdFRhdGlvPSJub25lIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZWVlZWVlIi8+PC9zdmc+';
+                        img.classList.add('lazy');
+                        imageObserver.observe(img);
+                    }
+                });
+            } else {
+                // Fallback para navegadores que no soportan IntersectionObserver
+                document.querySelectorAll('.product-image img').forEach(img => {
+                    img.classList.add('loaded');
+                });
+            }
+        }
+
+        // Función para crear tarjetas de producto
+        function createProductCard(product, isFavoriteView = false) {
+            const isFavorite = checkIfFavorite(product.id);
+            const selectedSize = selectedSizes[product.id] || '';
+            const selectedColor = selectedColors[product.id] || '';
+            
+            // Crear opciones de tallas
+            const sizeOptions = product.tallas ? product.tallas.map(talla => {
+                const isSelected = talla === selectedSize;
+                
+                return `
+                    <button class="size-option ${isSelected ? 'selected' : ''}" 
+                        data-product-id="${product.id}"
+                        data-size="${talla}"
+                        ${isSelected ? 'aria-current="true"' : ''}>
+                        ${talla}
+                    </button>
+                `;
+            }).join('') : '';
+            
+            // Crear opciones de color
+            const colorOptions = product.colores ? product.colores.map(color => {
+                const isSelected = color.codigo === selectedColor;
+                const colorName = color.nombre || getColorName(color.codigo);
+                
+                return `
+                    <button class="color-option ${isSelected ? 'selected' : ''}" 
+                         style="background-color: ${color.codigo};"
+                         data-product-id="${product.id}"
+                         data-color-code="${color.codigo}"
+                         data-color-name="${colorName}"
+                         aria-label="Color ${colorName}"
+                         ${isSelected ? 'aria-current="true"' : ''}>
+                         <span class="color-name">${colorName}</span>
+                    </button>
+                `;
+            }).join('') : '';
+            
+            // Crear etiquetas de palabras clave si existen
+            const keywordTags = product.palabrasClave ? product.palabrasClave.map(keyword => 
+                `<span class="keyword-tag">${keyword}</span>`
+            ).join('') : '';
+            
+            return `
+                <div class="product-card" data-id="${product.id}" data-category="${product.categoria}${product.subcategoria ? ' ' + product.subcategoria : ''}" data-searchable="${product.titulo.toLowerCase()} ${product.descripcion.toLowerCase()} ${product.palabrasClave ? product.palabrasClave.join(' ') : ''}">
+                    ${product.etiqueta ? `<span class="product-badge">${product.etiqueta}</span>` : ''}
+                    <button class="favorite-badge ${isFavorite ? 'active' : ''}" 
+                            data-id="${product.id}"
+                            aria-label="${isFavorite ? 'Quitar de favoritos' : 'Agregar a favoritos'}">
+                        <i class="fas fa-heart" aria-hidden="true"></i>
+                    </button>
+                    <div class="product-image">
+                        <img src="${product.imagen}" alt="${product.titulo} - ${product.descripcion}" loading="lazy">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">${product.titulo}</h3>
+                        <p class="product-description">${product.descripcion}</p>
+                        <div class="product-price">${product.precio ? `S/. ${product.precio.toFixed(2)}` : 'Consultar precio'}</div>
+                        
+                        ${keywordTags ? `<div class="product-keywords">${keywordTags}</div>` : ''}
+                        
+                        <div class="product-details">
+                            ${product.tallas && product.tallas.length > 0 ? `
+                                <div class="detail-item">
+                                    <span class="detail-label">Tallas:</span>
+                                    <div class="size-options">
+                                        ${sizeOptions}
+                                    </div>
+                                </div>
+                            ` : ''}
+                            
+                            ${product.colores && product.colores.length > 0 ? `
+                                <div class="detail-item">
+                                    <span class="detail-label">Colores:</span>
+                                    <div class="color-options">
+                                        ${colorOptions}
+                                    </div>
+                                </div>
+                            ` : ''}
+                        </div>
+                        
+                        <div class="product-actions">
+                            <a href="detalle.html?id=${product.id}" class="btn-detail">
+                                <i class="fas fa-eye" aria-hidden="true"></i> Ver Detalle
+                            </a>
+                            <button class="btn-contact contact-advisor" data-product-id="${product.id}">
+                                <i class="fab fa-whatsapp"></i> Contactar Asesor
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Función para renderizar productos con paginación
+        function renderProductsWithPagination(products, gridId, paginationId) {
+            const grid = document.getElementById(gridId);
+            const pagination = document.getElementById(paginationId);
+            
+            if (products.length === 0) {
+                grid.innerHTML = '<p class="no-results">No se encontraron productos.</p>';
+                if (pagination) pagination.innerHTML = '';
+                return;
+            }
+            
+            // Calcular número de páginas
+            const totalPages = Math.ceil(products.length / productsPerPage);
+            
+            // Mostrar solo la primera página inicialmente
+            const paginatedProducts = products.slice(0, productsPerPage);
+            grid.innerHTML = paginatedProducts.map(product => createProductCard(product)).join('');
+            
+            // Crear paginación si hay más de una página
+            if (pagination && totalPages > 1) {
+                let paginationHTML = '';
+                
+                // Botón anterior
+                paginationHTML += `<button class="page-btn prev-btn" data-page="prev" aria-label="Página anterior" ${1 === 1 ? 'disabled' : ''}><i class="fas fa-chevron-left" aria-hidden="true"></i></button>`;
+                
+                // Números de página
+                for (let i = 1; i <= totalPages; i++) {
+                    paginationHTML += `<button class="page-btn ${i === 1 ? 'active' : ''}" data-page="${i}" aria-label="Página ${i}">${i}</button>`;
+                }
+                
+                // Botón siguiente
+                paginationHTML += `<button class="page-btn next-btn" data-page="next" aria-label="Página siguiente" ${1 === totalPages ? 'disabled' : ''}><i class="fas fa-chevron-right" aria-hidden="true"></i></button>`;
+                
+                pagination.innerHTML = paginationHTML;
+                
+                // Configurar eventos de paginación
+                pagination.querySelectorAll('.page-btn').forEach(btn => {
+                    const handlePagination = () => {
+                        if (btn.disabled) return;
+                        
+                        const currentPage = parseInt(pagination.querySelector('.page-btn.active')?.dataset.page) || 1;
+                        let newPage = currentPage;
+                        
+                        if (btn.dataset.page === 'prev') {
+                            newPage = Math.max(1, currentPage - 1);
+                        } else if (btn.dataset.page === 'next') {
+                            newPage = Math.min(totalPages, currentPage + 1);
+                        } else {
+                            newPage = parseInt(btn.dataset.page);
+                        }
+                        
+                        if (newPage !== currentPage) {
+                            // Actualizar página activa
+                            pagination.querySelectorAll('.page-btn').forEach(b => b.classList.remove('active'));
+                            pagination.querySelector(`.page-btn[data-page="${newPage}"]`).classList.add('active');
+                            
+                            // Actualizar estado de botones anterior/siguiente
+                            pagination.querySelector('.prev-btn').disabled = newPage === 1;
+                            pagination.querySelector('.next-btn').disabled = newPage === totalPages;
+                            
+                            // Mostrar productos de la nueva página
+                            const startIndex = (newPage - 1) * productsPerPage;
+                            const endIndex = startIndex + productsPerPage;
+                            const pageProducts = products.slice(startIndex, endIndex);
+                            
+                            grid.innerHTML = pageProducts.map(product => createProductCard(product)).join('');
+                            setupLazyLoading();
+                            setupColorAndSizeSelection();
+                            setupFavoriteButtons();
+                            setupAdvisorButtons();
+                            
+                            // Desplazar hacia la sección correspondiente
+                            const sectionId = gridId.split('-')[0];
+                            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }; 
+                    
+                    btn.addEventListener('click', handlePagination);
+                    eventListeners.push({ element: btn, type: 'click', handler: handlePagination });
+                });
+            } else if (pagination) {
+                pagination.innerHTML = '';
+            }
+        }
+
+        // Función para renderizar productos
+        function renderProducts(productos) {
+            // Productos destacados
+            const featuredProducts = productos.filter(product => product.destacado);
+            renderProductsWithPagination(featuredProducts, 'featured-products-grid', 'featured-pagination');
+            
+            // Crear secciones dinámicas por categoría
+            createCategorySections(productos);
+            
+            // Configurar selección de colores y tallas
+            setupColorAndSizeSelection();
+            // Configurar botones de favoritos
+            setupFavoriteButtons();
+            // Configurar botones de asesores
+            setupAdvisorButtons();
+        }
+
+        // Crear secciones dinámicas por categoría
+        function createCategorySections(productos) {
+            const categorySectionsContainer = document.getElementById('category-sections');
+            categorySectionsContainer.innerHTML = '';
+            categorySections = {};
+            
+            // Obtener todas las categorías únicas
+            const categories = [...new Set(productos.map(product => product.categoria))];
+            
+            // Crear una sección para cada categoría
+            categories.forEach(category => {
+                const categoryProducts = productos.filter(product => product.categoria === category);
+                
+                // Solo crear sección si hay productos en esta categoría
+                if (categoryProducts.length > 0) {
+                    const sectionId = category.toLowerCase().replace(/\s+/g, '-');
+                    categorySections[sectionId] = category;
+                    
+                    const sectionHTML = `
+                        <section id="${sectionId}" aria-labelledby="${sectionId}Title">
+                            <div class="section-title">
+                                <h2 id="${sectionId}Title">${formatCategoryName(category)}</h2>
+                                <p>Explora nuestra colección de ${formatCategoryName(category).toLowerCase()}</p>
+                            </div>
+                            <div class="products-grid" id="${sectionId}-grid" role="list" aria-label="Lista de ${formatCategoryName(category).toLowerCase()}"></div>
+                            <div class="pagination" id="${sectionId}-pagination" aria-label="Paginación de ${formatCategoryName(category).toLowerCase()}"></div>
+                        </section>
+                    `;
+                    
+                    categorySectionsContainer.innerHTML += sectionHTML;
+                    
+                    // Renderizar productos para esta categoría
+                    renderProductsWithPagination(categoryProducts, `${sectionId}-grid`, `${sectionId}-pagination`);
+                }
+            });
+        }
+
+        // Configurar selección de colores y tallas
+        function setupColorAndSizeSelection() {
+            // Event delegation para opciones de talla
+            const handleSizeSelection = function(e) {
+                if (e.target.classList.contains('size-option') && !e.target.disabled) {
+                    const productId = parseInt(e.target.getAttribute('data-product-id'));
+                    const size = e.target.getAttribute('data-size');
+                    
+                    // Actualizar selección
+                    selectedSizes[productId] = size;
+                    
+                    // Actualizar UI para este producto
+                    updateProductCard(productId);
+                }
+                
+                // Event delegation para opciones de color
+                if (e.target.classList.contains('color-option') && !e.target.disabled) {
+                    const productId = parseInt(e.target.getAttribute('data-product-id'));
+                    const colorCode = e.target.getAttribute('data-color-code');
+                    
+                    // Actualizar selección
+                    selectedColors[productId] = colorCode;
+                    
+                    // Actualizar UI
+                    const productCard = e.target.closest('.product-card');
+                    productCard.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
+                    e.target.classList.add('selected');
+                    
+                    // Actualizar atributos ARIA
+                    productCard.querySelectorAll('.color-option').forEach(opt => opt.removeAttribute('aria-current'));
+                    e.target.setAttribute('aria-current', 'true');
+                }
+            };
+            
+            document.addEventListener('click', handleSizeSelection);
+            eventListeners.push({ element: document, type: 'click', handler: handleSizeSelection });
+        }
+
+        // Actualizar tarjeta de producto específica
+        function updateProductCard(productId) {
+            const product = productosData.find(p => p.id === productId);
+            if (!product) return;
+            
+            // Encontrar todas las instancias de esta tarjeta de producto
+            const productCards = document.querySelectorAll(`.product-card[data-id="${productId}"]`);
+            
+            productCards.forEach(card => {
+                const newCardHTML = createProductCard(product);
+                card.outerHTML = newCardHTML;
+            });
+            
+            // Volver a configurar eventos
+            setupColorAndSizeSelection();
+            setupFavoriteButtons();
+            setupAdvisorButtons();
+        }
+
+        // Configurar botones de favoritos
+        function setupFavoriteButtons() {
+            // Event delegation para botones de favoritos
+            const handleFavoriteClick = function(e) {
+                if (e.target.closest('.favorite-badge')) {
+                    const badge = e.target.closest('.favorite-badge');
+                    const productId = parseInt(badge.getAttribute('data-id'));
+                    
+                    if (badge.classList.contains('active')) {
+                        removeFromFavorites(productId);
+                    } else {
+                        addToFavorites(productId);
+                    }
+                    
+                    // Actualizar todos los badges del mismo producto
+                    updateFavoriteBadges();
+                }
+            };
+            
+            document.addEventListener('click', handleFavoriteClick);
+            eventListeners.push({ element: document, type: 'click', handler: handleFavoriteClick });
+        }
+
+        // Configurar botones de contacto con asesor
+        function setupAdvisorButtons() {
+            // Event delegation para botones de asesor
+            const handleAdvisorClick = function(e) {
+                if (e.target.closest('.contact-advisor')) {
+                    const button = e.target.closest('.contact-advisor');
+                    const productId = parseInt(button.getAttribute('data-product-id'));
+                    const product = productosData.find(p => p.id === productId);
+                    
+                    if (product) {
+                        showAdvisorsModal(product);
+                    }
+                }
+            };
+            
+            document.addEventListener('click', handleAdvisorClick);
+            eventListeners.push({ element: document, type: 'click', handler: handleAdvisorClick });
+        }
+
+        // Sistema de Favoritos
+        function getFavorites() {
+            const favorites = localStorage.getItem('favorites');
+            return favorites ? JSON.parse(favorites) : [];
+        }
+
+        function saveFavorites(favorites) {
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            updateFavoriteBadges();
+        }
+
+        function addToFavorites(productId) {
+            const favorites = getFavorites();
+            if (!favorites.includes(productId)) {
+                favorites.push(productId);
+                saveFavorites(favorites);
+                showMessage('Producto añadido a favoritos', 'success');
+                return true;
+            }
+            return false;
+        }
+
+        function removeFromFavorites(productId) {
+            let favorites = getFavorites();
+            favorites = favorites.filter(id => id !== productId);
+            saveFavorites(favorites);
+            showMessage('Producto eliminado de favoritos', 'info');
+        }
+
+        function checkIfFavorite(productId) {
+            const favorites = getFavorites();
+            return favorites.includes(productId);
+        }
+
+        // Actualizar todos los badges de favoritos en la página
+        function updateFavoriteBadges() {
+            const favorites = getFavorites();
+            document.querySelectorAll('.favorite-badge').forEach(badge => {
+                const productId = parseInt(badge.getAttribute('data-id'));
+                if (favorites.includes(productId)) {
+                    badge.classList.add('active');
+                    badge.setAttribute('aria-label', 'Quitar de favoritos');
+                } else {
+                    badge.classList.remove('active');
+                    badge.setAttribute('aria-label', 'Agregar a favoritos');
+                }
+            });
+        }
+
+        // Función para búsqueda de productos
+        function setupSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const searchLoading = document.getElementById('searchLoading');
+            const searchSuggestions = document.getElementById('searchSuggestions');
+            const voiceSearchBtn = document.getElementById('voiceSearchBtn');
+            
+            const handleSearchInput = () => {
+                // Mostrar indicador de carga
+                searchLoading.classList.add('active');
+                
+                // Cancelar timeout anterior
+                if (searchTimeout) {
+                    clearTimeout(searchTimeout);
+                }
+                
+                // Establecer nuevo timeout para debounce (500ms)
+                searchTimeout = setTimeout(() => {
+                    searchTerm = searchInput.value.toLowerCase().trim();
+                    
+                    // Mostrar sugerencias si hay texto
+                    if (searchTerm.length > 0) {
+                        showSearchSuggestions(searchTerm);
+                    } else {
+                        searchSuggestions.style.display = 'none';
+                    }
+                    
+                    // Aplicar filtros (que incluye la búsqueda)
+                    applyFilters();
+                    
+                    searchLoading.classList.remove('active');
+                }, 500);
+            };
+            
+            searchInput.addEventListener('input', handleSearchInput);
+            eventListeners.push({ element: searchInput, type: 'input', handler: handleSearchInput });
+            
+            // Configurar búsqueda por voz
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                const recognition = new SpeechRecognition();
+                recognition.continuous = false;
+                recognition.lang = 'es-ES';
+                
+                voiceSearchBtn.addEventListener('click', () => {
+                    try {
+                        recognition.start();
+                        voiceSearchBtn.innerHTML = '<i class="fas fa-circle" aria-hidden="true"></i>';
+                        voiceSearchBtn.style.color = 'red';
+                    } catch (error) {
+                        console.error('Error al iniciar reconocimiento de voz:', error);
+                        showMessage('Error al iniciar el reconocimiento de voz', 'error');
+                    }
+                });
+                
+                recognition.onresult = (event) => {
+                    const transcript = event.results[0][0].transcript;
+                    searchInput.value = transcript;
+                    searchTerm = transcript.toLowerCase();
+                    applyFilters();
+                };
+                
+                recognition.onend = () => {
+                    voiceSearchBtn.innerHTML = '<i class="fas fa-microphone" aria-hidden="true"></i>';
+                    voiceSearchBtn.style.color = '';
+                };
+                
+                recognition.onerror = (event) => {
+                    console.error('Error en reconocimiento de voz:', event.error);
+                    voiceSearchBtn.innerHTML = '<i class="fas fa-microphone" aria-hidden="true"></i>';
+                    voiceSearchBtn.style.color = '';
+                    
+                    if (event.error === 'not-allowed') {
+                        showMessage('Permiso de micrófono no concedido', 'error');
+                    } else {
+                        showMessage('Error en reconocimiento de voz: ' + event.error, 'error');
+                    }
+                };
+            } else {
+                // Navegador no compatible con reconocimiento de voz
+                voiceSearchBtn.style.display = 'none';
+            }
+            
+            // Ocultar sugerencias al hacer clic fuera
+            const hideSuggestions = (e) => {
+                if (!searchInput.contains(e.target) && !searchSuggestions.contains(e.target)) {
+                    searchSuggestions.style.display = 'none';
+                }
+            };
+            
+            document.addEventListener('click', hideSuggestions);
+            eventListeners.push({ element: document, type: 'click', handler: hideSuggestions });
+            
+            // Navegación por teclado en sugerencias
+            const handleSearchKeydown = (e) => {
+                if (e.key === 'ArrowDown' && searchSuggestions.style.display === 'block') {
+                    e.preventDefault();
+                    const firstSuggestion = searchSuggestions.querySelector('.search-suggestion-item');
+                    if (firstSuggestion) firstSuggestion.focus();
+                }
+            };
+            
+            searchInput.addEventListener('keydown', handleSearchKeydown);
+            eventListeners.push({ element: searchInput, type: 'keydown', handler: handleSearchKeydown });
+        }
+
+        // Mostrar sugerencias de búsqueda
+        function showSearchSuggestions(term) {
+            const searchSuggestions = document.getElementById('searchSuggestions');
+            searchSuggestions.innerHTML = '';
+            
+            // Buscar productos que coincidan
+            const suggestions = [];
+            
+            productosData.forEach(product => {
+                const searchableText = `${product.titulo} ${product.descripcion} ${product.palabrasClave ? product.palabrasClave.join(' ') : ''}`.toLowerCase();
+                
+                if (searchableText.includes(term)) {
+                    suggestions.push({
+                        id: product.id,
+                        title: product.titulo,
+                        category: product.categoria
+                    });
+                }
+            });
+            
+            // Limitar a 5 sugerencias
+            const limitedSuggestions = suggestions.slice(0, 5);
+            
+            if (limitedSuggestions.length > 0) {
+                limitedSuggestions.forEach(suggestion => {
+                    const suggestionItem = document.createElement('div');
+                    suggestionItem.className = 'search-suggestion-item';
+                    suggestionItem.tabIndex = 0;
+                    suggestionItem.setAttribute('role', 'option');
+                    suggestionItem.innerHTML = `
+                        <i class="fas fa-search"></i>
+                        <span>${suggestion.title}</span>
+                    `;
+                    
+                    const handleSuggestionClick = () => {
+                        document.getElementById('searchInput').value = suggestion.title;
+                        searchTerm = suggestion.title.toLowerCase();
+                        applyFilters();
+                        searchSuggestions.style.display = 'none';
+                    };
+                    
+                    suggestionItem.addEventListener('click', handleSuggestionClick);
+                    eventListeners.push({ element: suggestionItem, type: 'click', handler: handleSuggestionClick });
+                    
+                    const handleSuggestionKeydown = (e) => {
+                        if (e.key === 'Enter') {
+                            document.getElementById('searchInput').value = suggestion.title;
+                            searchTerm = suggestion.title.toLowerCase();
+                            applyFilters();
+                            searchSuggestions.style.display = 'none';
+                        }
+                    };
+                    
+                    suggestionItem.addEventListener('keydown', handleSuggestionKeydown);
+                    eventListeners.push({ element: suggestionItem, type: 'keydown', handler: handleSuggestionKeydown });
+                    
+                    searchSuggestions.appendChild(suggestionItem);
+                });
+                
+                searchSuggestions.style.display = 'block';
+            } else {
+                searchSuggestions.style.display = 'none';
+            }
+        }
+
+        // Mostrar modal de asesores
+        function showAdvisorsModal(product = null) {
+            const modal = document.getElementById('advisorsModal');
+            const advisorsGrid = document.getElementById('advisorsGrid');
+            
+            if (!advisorsGrid || advisorsData.length === 0) return;
+            
+            // Obtener selecciones actuales del producto
+            let selectedSize = '';
+            let selectedColorName = '';
+            
+            if (product) {
+                selectedSize = selectedSizes[product.id] || '';
+                
+                // Obtener nombre del color seleccionado
+                if (selectedColors[product.id]) {
+                    selectedColorName = getColorName(selectedColors[product.id]);
+                }
+            }
+            
+            // Mostrar todos los asesores sin filtrar por especialidad
+            advisorsGrid.innerHTML = advisorsData.map(advisor => {
+                let message = `Hola ${advisor.nombre}, me gustaría recibir más información sobre el producto: ${product.titulo} (${window.location.origin}/detalle.html?id=${product.id})`;
+                
+                // Añadir información de talla y color si están seleccionados
+                if (selectedSize) {
+                    message += `\n• Talla: ${selectedSize}`;
+                }
+                
+                if (selectedColorName) {
+                    message += `\n• Color: ${selectedColorName}`;
+                }
+                
+                return `
+                    <div class="advisor-card">
+                        <img src="${advisor.foto}" alt="${advisor.nombre}" class="advisor-photo">
+                        <h3 class="advisor-name">${advisor.nombre}</h3>
+                        <p class="advisor-position">${advisor.puesto}</p>
+                        <div class="advisor-contact">
+                            <a href="https://wa.me/${advisor.telefono}?text=${encodeURIComponent(message)}" 
+                            class="contact-link" target="_blank">
+                                <i class="fab fa-whatsapp"></i> Contactar por WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            
+            // Mostrar modal
+            modal.classList.add('active');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Configurar modal de asesores
+        function setupAdvisorsModal() {
+            const modal = document.getElementById('advisorsModal');
+            const closeButton = document.getElementById('closeAdvisorsModal');
+            
+            if (!closeButton) return;
+            
+            const closeModal = () => {
+                modal.classList.remove('active');
+                modal.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+            };
+            
+            closeButton.addEventListener('click', closeModal);
+            eventListeners.push({ element: closeButton, type: 'click', handler: closeModal });
+            
+            // Cerrar al hacer clic fuera del contenido
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+            
+            eventListeners.push({ element: modal, type: 'click', handler: (e) => {
+                if (e.target === modal) closeModal();
+            }});
+        }
+
+        // Mostrar mensaje de notificación
+        function showMessage(message, type = 'info') {
+            // Crear elemento de notificación si no existe
+            let notification = document.getElementById('notification');
+            if (!notification) {
+                notification = document.createElement('div');
+                notification.id = 'notification';
+                notification.style.position = 'fixed';
+                notification.style.bottom = '20px';
+                notification.style.left= '50%';
+                notification.style.transform = 'translateX(-50%)';
+                notification.style.padding = '12px 24px';
+                notification.style.color = 'white';
+                notification.style.borrowradius = '4px';
+                notification.style.boxShadow = 'var(--shadow-hover)';
+                notification.style.zIndex = '10000';
+                notification.style.opacity = '0';
+                notification.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                notification.style.maxWidth = '90%';
+                notification.style.textAlign = 'center';
+                document.body.appendChild(notification);
+            }
+            
+            // Establecer color según el tipo
+            if (type === 'success') {
+                notification.style.background = 'var(--secondary-color)';
+            } else if (type === 'warning') {
+                notification.style.background = 'var(--accent-secondary)';
+            } else if (type === 'error') {
+                notification.style.background = '#e74c3c';
+            } else {
+                notification.style.background = 'var(--primary-color)';
+            }
+            
+            // Establecer mensaje y mostrar
+            notification.textContent = message;
+            notification.style.opacity = '1';
+            notification.style.transform = 'translateX(-50%) translateY(0)';
+            
+            // Ocultar después de 3 segundos
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(-50%) translateY(20px)';
+            }, 3000);
+        }
+
+        // Configurar botón para volver arriba
+        function setupBackToTop() {
+            const backToTopButton = document.getElementById('backToTop');
+            
+            const handleScroll = () => {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            };
+            
+            window.addEventListener('scroll', handleScroll);
+            eventListeners.push({ element: window, type: 'scroll', handler: handleScroll} );
+            
+            const scrollToTop = () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            };
+            
+            backToTopButton.addEventListener('click', scrollToTop);
+            eventListeners.push({ element: backToTopButton, type: 'click', handler: scrollToTop });
+        }
+
+        // Configurar modal de filtros para móviles
+        function setupFiltersModal() {
+            const filtersFloat = document.getElementById('filtersFloat');
+            const filtersModal = document.getElementById('filtersModal');
+            const closeFiltersModal = document.getElementById('closeFiltersModal');
+            const applyFiltersBtn = document.getElementById('applyFilters');
+            
+            // Abrir modal de filtros
+            const openFiltersModal = () => {
+                filtersModal.classList.add('active');
+                filtersModal.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+            };
+            
+            filtersFloat.addEventListener('click', openFiltersModal);
+            eventListeners.push({ element: filtersFloat, type: 'click', handler: openFiltersModal });
+            
+            // Cerrar modal de filtros
+            const closeFilters = () => {
+                filtersModal.classList.remove('active');
+                filtersModal.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+            };
+            
+            closeFiltersModal.addEventListener('click', closeFilters);
+            eventListeners.push({ element: closeFiltersModal, type: 'click', handler: closeFilters });
+            
+            // Aplicar filtros y cerrar modal
+            const applyFiltersHandler = () => {
+                applyFilters();
+                // Solución para el problema de accesibilidad
+                setTimeout(() => {
+                    filtersModal.classList.remove('active');
+                    filtersModal.setAttribute('aria-hidden', 'true');
+                    document.body.style.overflow = '';
+                }, 100);
+            };
+            
+            applyFiltersBtn.addEventListener('click', applyFiltersHandler);
+            eventListeners.push({ element: applyFiltersBtn, type: 'click', handler: applyFiltersHandler });
+            
+            // Cerrar al hacer clic fuera del contenido
+            const handleOutsideClick = (e) => {
+                if (e.target === filtersModal) {
+                    filtersModal.classList.remove('active');
+                    filtersModal.setAttribute('aria-hidden', 'true');
+                    document.body.style.overflow = '';
+                }
+            };
+            
+            filtersModal.addEventListener('click', handleOutsideClick);
+            eventListeners.push({ element: filtersModal, type: 'click', handler: handleOutsideClick });
+        }
+
+        // Manejar eventos de teclado para accesibilidad
+        function setupKeyboardNavigation() {
+            const handleKeydown = (e) => {
+                if (e.key === 'Escape') {
+                    // Cerrar todos los modales
+                    document.querySelectorAll('.modal, .filters-modal').forEach(modal => {
+                        if (modal.classList.contains('active')) {
+                            modal.classList.remove('active');
+                            modal.setAttribute('aria-hidden', 'true');
+                            document.body.style.overflow = '';
+                        }
+                    });
+                    
+                    // Cerrar menú móvil
+                    const mainNav = document.getElementById('mainNav');
+                    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+                    if (mainNav && mainNav.classList.contains('active')) {
+                        mainNav.classList.remove('active');
+                        mobileMenuBtn.innerHTML = '<i class="fas fa-bars" aria-hidden="true"></i>';
+                        mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                    }
+                    
+                    // Cerrar sugerencias de búsqueda
+                    document.getElementById('searchSuggestions').style.display = 'none';
+                }
+                
+                // Navegación por teclado en filtros
+                if (e.key === 'Enter' || e.key === ' ') {
+                    const focused = document.activeElement;
+                    if (focused.classList.contains('filter-group-header')) {
+                        e.preventDefault();
+                        focused.click();
+                    }
+                }
+                
+                // Navegación por teclado en sugerencias
+                if (e.key === 'ArrowDown') {
+                    const searchSuggestions = document.getElementById('searchSuggestions');
+                    if (searchSuggestions.style.display === 'block') {
+                        e.preventDefault();
+                        const firstSuggestion = searchSuggestions.querySelector('.search-suggestion-item');
+                        if (firstSuggestion) firstSuggestion.focus();
+                    }
+                }
+                
+                if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                    const focused = document.activeElement;
+                    if (focused.classList.contains('search-suggestion-item')) {
+                        e.preventDefault();
+                        const allSuggestions = Array.from(document.querySelectorAll('.search-suggestion-item'));
+                        const currentIndex = allSuggestions.indexOf(focused);
+                        
+                        if (e.key === 'ArrowDown' && currentIndex < allSuggestions.length - 1) {
+                            allSuggestions[currentIndex + 1].focus();
+                        } else if (e.key === 'ArrowUp' && currentIndex > 0) {
+                            allSuggestions[currentIndex - 1].focus();
+                        } else if (e.key === 'ArrowUp' && currentIndex === 0) {
+                            document.getElementById('searchInput').focus();
+                        }
+                    }
+                }
+            };
+            
+            document.addEventListener('keydown', handleKeydown);
+            eventListeners.push({ element: document, type: 'keydown', handler: handleKeydown });
+        }
+
+        // Sincronizar filtros entre versión desktop y móvil
+        function syncFilters() {
+            // Cuando cambia un filtro en desktop, actualizar móvil
+            document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
+                const handleFilterSync = function() {
+                    const value = this.value;
+                    const type = this.getAttribute('data-type');
+                    
+                    // Encontrar el checkbox correspondiente en el otro conjunto
+                    const otherCheckbox = document.querySelector(`.filter-checkbox[data-type="${type}"][value="${value}"]:not(#${this.id})`);
+                    if (otherCheckbox) {
+                        otherCheckbox.checked = this.checked;
+                    }
+                };
+                
+                checkbox.addEventListener('change', handleFilterSync);
+                eventListeners.push({ element: checkbox, type: 'change', handler: handleFilterSync });
+            });
+        }
+
+        // Limpiar event listeners para evitar memory leaks
+        function cleanupEventListeners() {
+            eventListeners.forEach(({ element, type, handler }) => {
+                element.removeEventListener(type, handler);
+            });
+            eventListeners = [];
+        }
+
+        // Inicializar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            loadMenu();
+            loadFooter();
+            loadProducts();
+            setupSearch();
+            setupFiltersModal();
+            setupKeyboardNavigation();
+            setupBackToTop();
+            syncFilters();
+            setupAdvisorsModal();
+        });
+
+        // Limpiar event listeners cuando la página se descarga
+        window.addEventListener('beforeunload', cleanupEventListeners);
+    </script>
+</body>
+</html>
